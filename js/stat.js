@@ -1,6 +1,6 @@
 'use strict';
 
-var findMaxTime = function (arr) {
+var getMaxElement = function (arr) {
     var max = -1;
 
     for (var i = 0; i < arr.length; i++) {
@@ -23,8 +23,8 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.font = '16px PT Mono';
     ctx.fillText('Ура, вы победили!', 120, 40);
     ctx.fillText('Список результатов:', 120, 60);
-    
-    var maxTime = findMaxTime(times);
+
+    var maxTime = getMaxElement(times);
     var histogramHeight = 150;
     var barWidth = 40;
     var indent = 50;
