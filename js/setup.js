@@ -4,6 +4,7 @@ var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Крис�
 var surnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var coatColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var eyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
+var fareballColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var wizards = [];
 
 var setProperty = function (arr) {
@@ -45,4 +46,53 @@ for (var i = 0; i < wizards.length; i ++) {
 
 similarListElement.appendChild(fragment);
 
-userDialog.classList.remove('hidden');
+var setupClose = userDialog.querySelector('.setup-close');
+var setupOpen = document.querySelector('.setup-open-icon');
+
+setupClose.addEventListener('click', function () {
+    userDialog.classList.add('hidden');
+});
+
+setupOpen.addEventListener('click', function () {
+    userDialog.classList.remove('hidden');
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 13) {
+        userDialog.classList.remove('hidden');
+    }
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+        userDialog.classList.add('hidden');
+    }
+});
+
+var userNAmeInput = userDialog.querySelector('.setup-user-name');
+
+userNAmeInput.addEventListener('invalid', function (evt) {
+   if (userNAmeInput.validity.tooShort) {
+       userNAmeInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+   } else if (userNAmeInput.validity.tooLong) {
+       userNAmeInput.setCustomValidity('Имя не должно превышать 25 символов');
+   } else if (userNAmeInput.validity.valueMissing) {
+       userNAmeInput.setCustomValidity('Обязательное поле');
+   } else {
+       userNAmeInput.setCustomValidity('');
+   }
+});
+
+var wizardCoat = userDialog.querySelector('.wizard-coat');
+var wizardEye = userDialog.querySelector('.wizard-eyes');
+var fareball = userDialog.querySelector('.setup-fireball-wrap');
+
+wizardCoat.addEventListener('click', function () {
+    wizardCoat.style.fill = setProperty(coatColors);
+});
+wizardEye.addEventListener('click', function () {
+    wizardEye.style.fill = setProperty(eyesColors);
+});
+fareball.addEventListener('click', function () {
+    fareball.style.background = setProperty(fareballColors);
+});
