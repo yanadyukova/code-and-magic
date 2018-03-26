@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var surnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
@@ -15,7 +15,7 @@ var initialWizard = function (wizard) {
     wizard.name = setProperty(names) + ' ' + setProperty(surnames);
     wizard.coatColor = setProperty(coatColors);
     wizard.eyesColor = setProperty(eyesColors);
-}
+};
 
 var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -95,4 +95,42 @@ wizardEye.addEventListener('click', function () {
 });
 fareball.addEventListener('click', function () {
     fareball.style.background = setProperty(fareballColors);
+});
+
+var dialogHandle = userDialog.querySelector('.upload');
+
+dialogHandle.addEventListener('mousedown', function (evt) {
+   evt.preventDefault();
+
+   var startCoords = {
+       x: evt.clientX,
+       y: evt.clientY
+   };
+
+   var onMouseMove = function (moveEvt) {
+       moveEvt.preventDefault();
+
+       var shift = {
+           x: startCoords.x - moveEvt.clientX,
+           y: startCoords.y - moveEvt.clientY
+       };
+
+       startCoords = {
+           x: moveEvt.clientX,
+           y: moveEvt.clientY
+       };
+
+       userDialog.style.top = (userDialog.offsetTop - shift.y) + 'px';
+       userDialog.style.left = (userDialog.offsetLeft - shift.x) + 'px';
+   };
+
+   var onMouseUp = function (upEvt) {
+       upEvt.preventDefault();
+
+       document.removeEventListener('mousemove', onMouseMove);
+       document.removeEventListener('mouseup', onMouseUp);
+   };
+
+   document.addEventListener('mousemove', onMouseMove);
+   document.addEventListener('mouseup', onMouseUp);
 });
